@@ -16,6 +16,11 @@
         <item name="android:background">#e6e6e6</item>
     </style>
     
+    <style name="topBar">
+        <item name="android:background">#555555</item>
+        <item name="android:paddingLeft">120dp</item>
+    </style>
+    
     <style name="bar">
         <item name="android:background">#000000</item>
         

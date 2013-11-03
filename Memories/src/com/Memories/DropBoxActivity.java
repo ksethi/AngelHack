@@ -42,6 +42,7 @@ public class DropBoxActivity extends Activity {
 	        if (requestCode == REQUEST_LINK_TO_DBX) {
 	            if (resultCode == Activity.RESULT_OK) {
 	            	Log.d("DropBoxActivity","Result was good");         	
+	            	DropboxManager.setDbxFileSystem();
 	            	finish();
 	            } else {
 	            	Log.d("DropBoxActivity","Link to Dropbox failed or was cancelled.");

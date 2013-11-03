@@ -11,8 +11,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.dropbox.sync.android.DbxAccountManager;
+import com.dropbox.sync.android.DbxException.Unauthorized;
 import com.dropbox.sync.android.DbxFile;
 import com.dropbox.sync.android.DbxFileInfo;
 import com.dropbox.sync.android.DbxFileSystem;
@@ -24,26 +26,43 @@ public class DropboxManager {
 	
 	private static DbxAccountManager mDbxAcctMgr;
 	
+	private static DbxFileSystem dbxFs ; 
+	
 	public DropboxManager(Context appContext) {
 		mDbxAcctMgr = DbxAccountManager.getInstance(appContext, appKey, appSecret);
+
 	}
 	
 	public static DbxAccountManager GetManager() {
 		return mDbxAcctMgr;
 	}
 	
+	public static DbxFileSystem getdbfxFileSystem() {
+		return dbxFs;
+	}
+	
+	public static void setDbxFileSystem() {
+		try {
+			dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
+		} catch (Unauthorized e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	 public void writeJsonFile(String fileContents, String folderName, String fileName)
 	 {
 		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName + "/" + fileName);
 		 try {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
 		 	if (!dbxFs.exists(path)) {
                DbxFile file = dbxFs.create(path);
+
+               Log.d("Creating a new file with path",path.toString());
                try {
                    file.writeString(fileContents);
                } finally {
                    file.close();
-               }
+               }    
            }
 		 } catch (IOException e) {
 			 
@@ -55,7 +74,6 @@ public class DropboxManager {
 		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName);
 		 ArrayList<Bitmap> retImages = new ArrayList<Bitmap>();
 		 try {
-			 DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
 			 List<DbxFileInfo> filePaths = dbxFs.listFolder(path);
 			 
 			 for(DbxFileInfo info : filePaths)
@@ -100,15 +118,12 @@ public class DropboxManager {
 	 {
 		 String retVal = "";
 		 try {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-			if (dbxFs.isFile(path)) {
                DbxFile file = dbxFs.open(path);
                try {
                    retVal = file.readString();
                } finally {
                    file.close();
                }
-           }
 			return convertStringToBitmap(retVal);
 		 } catch (IOException e) {
 			return null;
@@ -123,21 +138,25 @@ public class DropboxManager {
 	 public String readJsonFile(String folderName, String fileName)
 	 {
 		 String retVal = "";
+		 
+		 Log.d("in dropbox manager", "in the read json file function");
 		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName + "/" + fileName);
-		 try {
-			DbxFileSystem dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
-			if (dbxFs.isFile(path)) {
-               DbxFile file = dbxFs.open(path);
-               try {
-                   retVal = file.readString();
-               } finally {
-                   file.close();
-               }
-           }
-			return retVal;
-		 } catch (IOException e) {
-			return retVal;
-		 }
+	
+		 Log.d("Read path", path.toString());
+				DbxFile file = null;
+			try {
+				file = dbxFs.open(path);
+		       retVal = file.readString();
+		       Log.i("in the readjson file", retVal);
+		   } catch( Exception e) {
+			   Log.i("went into the catch","the readString failed");
+		   }finally {
+			   Log.i("in the readjson file", retVal);
+			   file.close();
+		       
+		   }
+	
+		return retVal;
 	 }
 	 
 }

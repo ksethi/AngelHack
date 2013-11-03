@@ -1,19 +1,30 @@
 package com.Memories;
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.dropbox.sync.android.DbxAccountManager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 //import android.R;
 import android.app.ListActivity;
 import android.content.*;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -21,26 +32,20 @@ import android.widget.*;
 
 public class MyActivity extends Activity {
 	
-	private Button btnCamera;
 	private Button btnWriteFile;
 	private DropboxManager dbManager;
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 	private static final int CAMERA_PIC_REQUEST = 1;
 	private static final int RESULT_LOAD_IMAGE = 2;
 	private Button btnSelectPhoto;
-	private Button btnWriteFile;
-	private DropboxManager dbManager;
 	ImageView viewImage;
 	TextView Exif;
-	File _dir;
-	File _file;
 	
 	
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
 		  super.onCreate(savedInstanceState);
 		  setContentView(R.layout.activity_fullscreen);
-		  btnCamera = (Button)findViewById(R.id.btnCamera);
 		  
 		  btnSelectPhoto = (Button)findViewById(R.id.btnSelectPhoto);
 		  Exif = (TextView)findViewById(R.id.exif);
@@ -65,16 +70,6 @@ public class MyActivity extends Activity {
 
 		  }
 	 }
-	
-	public void buttonWriteFile(View view) {
-		dbManager.writeJsonFile("This is a test file from KJ", "FirstEvent" , "testFile.json");
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-	}
 	
 	public void loadPictureMenu()
 	{
@@ -186,32 +181,32 @@ public class MyActivity extends Activity {
 	    new HttpRequestHandler().execute(url);
 	}
 	
-	private static String convertStreamToString(InputStream is) {
-	    /*
-	     * To convert the InputStream to String we use the BufferedReader.readLine()
-	     * method. We iterate until the BufferedReader return null which means
-	     * there's no more data to read. Each line will appended to a StringBuilder
-	     * and returned as String.
-	     */
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-	    StringBuilder sb = new StringBuilder();
-
-	    String line = null;
-	    try {
-	        while ((line = reader.readLine()) != null) {
-	            sb.append(line + "\n");
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            is.close();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    return sb.toString();
-	}
+//	private static String convertStreamToString(InputStream is) {
+//	    /*
+//	     * To convert the InputStream to String we use the BufferedReader.readLine()
+//	     * method. We iterate until the BufferedReader return null which means
+//	     * there's no more data to read. Each line will appended to a StringBuilder
+//	     * and returned as String.
+//	     */
+//	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//	    StringBuilder sb = new StringBuilder();
+//
+//	    String line = null;
+//	    try {
+//	        while ((line = reader.readLine()) != null) {
+//	            sb.append(line + "\n");
+//	        }
+//	    } catch (IOException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            is.close();
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	    return sb.toString();
+//	}
 	
 	Float getLongitude(String Path)
 	{

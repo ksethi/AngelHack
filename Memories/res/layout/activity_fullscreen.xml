@@ -64,6 +64,11 @@
             android:layout_height="wrap_content"
             android:text="@string/gallery" />
 
+        <TextView
+            android:id="@+id/exif"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ImageView
             android:id="@+id/viewImage"
             android:layout_width="match_parent"

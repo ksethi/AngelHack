@@ -43,15 +43,12 @@
             tools:ignore="UselessParent" >
 
             <Button
-                android:id="@+id/btnCamera"
-                style="?buttonBarButtonStyle"
-                android:layout_width="0dp"
+                android:id="@+id/btnSelectPhoto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="loadCamera"
-                android:text="@string/camera" />
-            
-                     <Button
+                android:text="@string/photo_select" />
+
+            <Button
                 android:id="@+id/btnWriteFile"
                 style="?buttonBarButtonStyle"
                 android:layout_width="0dp"
@@ -59,8 +56,6 @@
                 android:layout_weight="1"
                 android:onClick="buttonWriteFile"
                 android:text="@string/writeFile" />
-      
-            
         </LinearLayout>
 
         <Button
@@ -68,11 +63,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gallery" />
-        
-              
-   
-            
-            
+
+        <ImageView
+            android:id="@+id/viewImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
     </FrameLayout>
 
 </FrameLayout>

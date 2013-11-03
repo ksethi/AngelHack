@@ -3,12 +3,16 @@ package com.Memories;
 import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.dropbox.sync.android.DbxAccountManager;
+import com.Memories.ExpandableListAdapter;
+import com.Memories.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,9 +29,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import android.widget.ExpandableListView.OnChildClickListener;
 
 
 public class MyActivity extends Activity {
@@ -40,13 +46,41 @@ public class MyActivity extends Activity {
 	private Button btnSelectPhoto;
 	ImageView viewImage;
 	TextView Exif;
-	
+	List<String> groupList;
+    List<String> childList;
+    Map<String, List<String>> laptopCollection;
+    ExpandableListView expListView;
+    String newGroup;
+    String defaultDesc = "It was great";
 	
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
 		  super.onCreate(savedInstanceState);
 		  setContentView(R.layout.activity_fullscreen);
-		  
+		  createGroupList();
+	        
+	        createCollection();
+	        
+	        expListView = (ExpandableListView) findViewById(R.id.laptop_list);
+	        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
+	                this, groupList, laptopCollection);
+	        expListView.setAdapter(expListAdapter);
+	 
+	        //setGroupIndicatorToRight();
+	 
+	        expListView.setOnChildClickListener(new OnChildClickListener() {
+	        	 
+	            public boolean onChildClick(ExpandableListView parent, View v,
+	                    int groupPosition, int childPosition, long id) {
+	                final String selected = (String) expListAdapter.getChild(
+	                        groupPosition, childPosition);
+	                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
+	                        .show();
+	 
+	                return true;
+	            }
+	        });
+		  /*
 		  btnSelectPhoto = (Button)findViewById(R.id.btnSelectPhoto);
 		  Exif = (TextView)findViewById(R.id.exif);
 		  viewImage =(ImageView)findViewById(R.id.viewImage);
@@ -59,8 +93,8 @@ public class MyActivity extends Activity {
 		  
 		  
 		  btnWriteFile =  (Button)findViewById(R.id.btnWriteFile);
-		  
-		  
+		  */
+	      //setContentView(R.layout.activity_drop_box);
 		  dbManager = new DropboxManager(getApplicationContext());
 		  Log.d("onCreate", "Starting up the activity");
 		  try {
@@ -128,6 +162,10 @@ public class MyActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();	
+		expListView = (ExpandableListView) findViewById(R.id.laptop_list);
+        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
+                this, groupList, laptopCollection);
+        expListView.setAdapter(expListAdapter);
 	}
 	
 	@Override
@@ -138,9 +176,9 @@ public class MyActivity extends Activity {
         {
         	Log.i("info", "photo taken");
         	
-        	Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ImageView test = (ImageView) findViewById(R.id.viewImage);
-            test.setImageBitmap(photo);
+        	//Bitmap photo = (Bitmap) data.getExtras().get("data");
+            //ImageView test = (ImageView) findViewById(R.id.viewImage);
+            //test.setImageBitmap(photo);
 //            try{
 //                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 //                String currentDateandTime = sdf.format(new Date()).replace(" ","");
@@ -295,4 +333,109 @@ public class MyActivity extends Activity {
 		  
 		 return result;
 	};
+	private void ShowDialog()
+    {
+    	Context context = getApplicationContext();
+    	LinearLayout layout = new LinearLayout(context);
+    	layout.setOrientation(LinearLayout.VERTICAL);
+
+    	final EditText titleBox = new EditText(context);
+    	titleBox.setHint("Title");
+    	layout.addView(titleBox);
+
+    	final EditText descriptionBox = new EditText(context);
+    	descriptionBox.setHint("Description");
+    	layout.addView(descriptionBox);
+
+    	//dialog.setView(layout);
+    	
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    	alert.setTitle("Add Event");
+    	alert.setView(layout);
+
+
+    	alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    	  public void onClick(DialogInterface dialog, int whichButton) {
+    	    // Canceled.
+    	  }
+    	});
+    	
+    	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    	public void onClick(DialogInterface dialog, int whichButton) {
+    	  newGroup = titleBox.getText().toString();
+    	  defaultDesc = descriptionBox.getText().toString();
+      	addNewGroup();
+    	  // Do something with value!
+    	  }
+    	});
+
+    	alert.show();
+    }
+    public void HeaderOnClick(View v)
+    {
+    	Log.d("Hello", "Hello");
+    	ShowDialog();
+    }
+
+    private void createGroupList() {
+        groupList = new ArrayList<String>();
+        groupList.add("Angel Hack");
+        groupList.add("Portland");
+        groupList.add("White Water Rafting");
+    }
+    
+    private void addNewGroup() {
+    	groupList.add(newGroup);
+    	childList = new ArrayList<String>();
+    	childList.add(defaultDesc);
+    	laptopCollection.put(newGroup, childList);
+    	((BaseAdapter) expListView.getAdapter()).notifyDataSetChanged();
+    }
+ 
+    private void createCollection() {
+        // preparing laptops collection(child)
+        String[] hpModels = { "Description: Fake description\nDate:Oct 27th" };
+        String[] hclModels = { "Description: Fake description\nDate:Oct 27th" };
+        String[] sonyModels = { "Description: Fake description\nDate:Oct 27th" };
+        laptopCollection = new LinkedHashMap<String, List<String>>();
+ 
+        for (String laptop : groupList) {
+            if (laptop.equals("Angel Hack")) {
+                loadChild(hpModels);
+            } else if (laptop.equals("Portland"))
+            {
+                loadChild(hclModels);
+            }
+            else
+            {
+                loadChild(sonyModels);
+            }
+ 
+            laptopCollection.put(laptop, childList);
+        }
+    }
+    
+    private void loadChild(String[] laptopModels) {
+        childList = new ArrayList<String>();
+        for (String model : laptopModels)
+            childList.add(model);
+    }
+    
+    private void setGroupIndicatorToRight() {
+        /* Get the screen width */
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+ 
+        expListView.setIndicatorBounds(width - getDipsFromPixel(35), width
+                - getDipsFromPixel(5));
+    }
+    
+ // Convert pixel to dip
+    public int getDipsFromPixel(float pixels) {
+        // Get the screen's density scale
+        final float scale = getResources().getDisplayMetrics().density;
+        // Convert the dps to pixels, based on density scale
+        return (int) (pixels * scale + 0.5f);
+    }
 }

@@ -31,6 +31,7 @@ public class DropBoxActivity extends Activity {
         mTestOutput = (TextView) findViewById(R.id.test_output);
 		if (mDbxAcctMgr.hasLinkedAccount()) {
 			Log.d("DropBoxActivity","Has linked Dropbox :)");
+			finish();
 		} else {
 			Log.d("DropBoxActivity","Does not have a linked dropbox ");
 			mDbxAcctMgr.startLink((Activity)this, REQUEST_LINK_TO_DBX);		
@@ -43,6 +44,7 @@ public class DropBoxActivity extends Activity {
 	            if (resultCode == Activity.RESULT_OK) {
 	            	Log.d("DropBoxActivity","Result was good");         	
 	            	finish();
+	            	this.setContentView(R.layout.activity_fullscreen);
 	            } else {
 	            	Log.d("DropBoxActivity","Link to Dropbox failed or was cancelled.");
 	            }
@@ -50,5 +52,8 @@ public class DropBoxActivity extends Activity {
 	            super.onActivityResult(requestCode, resultCode, data);
 	        }
 	    }
-
+	 @Override
+		protected void onResume() {
+			super.onResume();
+		}
 }

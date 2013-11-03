@@ -28,7 +28,7 @@ public class DropBoxActivity extends Activity {
 		
 		DbxAccountManager mDbxAcctMgr = DropboxManager.GetManager();
         
-        //mTestOutput = (TextView) findViewById(R.id.test_output);
+        mTestOutput = (TextView) findViewById(R.id.test_output);
 		if (mDbxAcctMgr.hasLinkedAccount()) {
 			Log.d("DropBoxActivity","Has linked Dropbox :)");
 		} else {

@@ -22,12 +22,18 @@ import android.widget.*;
 public class MyActivity extends Activity {
 	
 	private Button btnCamera;
+	private Button btnWriteFile;
 	private DropboxManager dbManager;
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
 		  super.onCreate(savedInstanceState);
 		  setContentView(R.layout.activity_fullscreen);
 		  btnCamera = (Button)findViewById(R.id.btnCamera);
+		  
+		  
+		  btnWriteFile =  (Button)findViewById(R.id.btnWriteFile);
+		  
+		  
 		  dbManager = new DropboxManager(getApplicationContext());
 		  Log.d("onCreate", "Starting up the activity");
 		  try {
@@ -36,9 +42,11 @@ public class MyActivity extends Activity {
 		  } catch(Exception e) {
 
 		  }
-		  
-		  
 	 }
+	
+	public void buttonWriteFile(View view) {
+		dbManager.writeJsonFile("This is a test file from KJ", "FirstEvent" , "testFile.json");
+	}
 	
 	@Override
 	protected void onResume() {

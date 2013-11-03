@@ -45,7 +45,6 @@ public class DropBoxActivity extends Activity {
 	            	Log.d("DropBoxActivity","Result was good");         	
 	            	DropboxManager.setDbxFileSystem();
 	            	finish();
-	            	this.setContentView(R.layout.activity_fullscreen);
 	            } else {
 	            	Log.d("DropBoxActivity","Link to Dropbox failed or was cancelled.");
 	            }

@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/red_button"
     android:orientation="vertical" >
+
+    <LinearLayout
+        style="@style/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:text="Save" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/viewImage"
@@ -28,6 +41,7 @@
         android:textColor="#000000"
         android:textSize="20dp" />
 
+    <!--
     <EditText
         android:id="@+id/descInput"
         android:layout_width="wrap_content"
@@ -36,6 +50,19 @@
         android:layout_marginLeft="27dp"
         android:layout_marginTop="5dp"
         android:textColor="#000000"
-        android:textSize="20dp" />
+        android:textSize="20dp" >
+
+        <requestFocus />
+    </EditText>
+    -->
+
+    <EditText
+        android:id="@+id/descInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp" >
+
+        <requestFocus />
+    </EditText>
 
 </LinearLayout>

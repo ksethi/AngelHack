@@ -58,12 +58,6 @@
                 android:text="@string/writeFile" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnGallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gallery" />
-
         <TextView
             android:id="@+id/exif"
             android:layout_width="match_parent"

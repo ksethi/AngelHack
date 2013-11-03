@@ -1,73 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context=".FullscreenActivity" >
-
-    <!--
-         The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc.
-    -->
-
-    <TextView
-        android:id="@+id/fullscreen_content"
+    android:orientation="vertical" 
+    style="@style/layout">
+	<ImageView
+        android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
-
-    <!--
-         This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows.
-    -->
-
-    <FrameLayout
+        android:layout_height="wrap_content"
+        android:contentDescription="logo"
+        android:src="@drawable/logo"
+        android:padding="15dp"
+        />
+	<TextView android:id="@+id/Events" android:text="Events"
+	    android:layout_height="72dp"
+	    android:clickable="true"
+	    android:layout_width="match_parent"
+	    style="@style/Header"
+	    android:onClick="HeaderOnClick"/>
+	
+	<ExpandableListView
+        android:id="@+id/laptop_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent" >
-
-            <Button
-                android:id="@+id/btnSelectPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/photo_select" />
-
-            <Button
-                android:id="@+id/btnWriteFile"
-                style="?buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="buttonWriteFile"
-                android:text="@string/writeFile" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/exif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/viewImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
-    </FrameLayout>
-
-</FrameLayout>
+        android:layout_height="fill_parent"
+        style="@style/button_text">
+     </ExpandableListView>
+</LinearLayout> 

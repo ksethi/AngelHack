@@ -11,5 +11,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="photo_select">Select Photo</string>
     <string name="writeFile">Write file!</string>
+    <string name="your_comment">My Comment</string>
+    <string name="send">Send</string>
 
 </resources>

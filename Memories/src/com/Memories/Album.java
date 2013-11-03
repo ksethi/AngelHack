@@ -112,6 +112,11 @@ public class Album extends AsyncTask<String,String,String> {
         hasLocation = true;
     }
     
-    //TODO WRITE TO DISK FOR AN ALBUM WHEN ?
+    private String Jsonify()
+    {
+    	JsonParser parse = new JsonParser();
+    	return parse.createJsonObject(this.name, this.date, this.description, this.latitude, this.longitude, this.imgNames.toArray());
+    }
+
     //TODO READ FROM DISK FOR AN ALBUM
 }

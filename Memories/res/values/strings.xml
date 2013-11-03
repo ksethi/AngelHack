@@ -4,5 +4,7 @@
     <string name="app_name">Memories</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="gallery">Choose Existing Photos</string>
+    <string name="camera">Take New Photo</string>
 
 </resources>

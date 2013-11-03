@@ -25,7 +25,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int dummy_button=0x7f070002;
+        public static final int btnCamera=0x7f070002;
+        public static final int btnGallery=0x7f070003;
         public static final int fullscreen_content=0x7f070000;
         public static final int fullscreen_content_controls=0x7f070001;
     }
@@ -34,18 +35,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int app_name=0x7f050000;
+        public static final int camera=0x7f050004;
         public static final int dummy_button=0x7f050001;
         public static final int dummy_content=0x7f050002;
+        public static final int gallery=0x7f050003;
     }
     public static final class style {
+        /** 
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+         */
+        public static final int AppBaseTheme=0x7f060001;
         /**  Base application theme. 
  Customize your theme here. 
          */
         public static final int AppTheme=0x7f060000;
         public static final int ButtonBar=0x7f060002;
         public static final int ButtonBarButton=0x7f060003;
-        public static final int FullscreenActionBarStyle=0x7f060004;
-        public static final int FullscreenTheme=0x7f060001;
+        public static final int FullscreenActionBarStyle=0x7f060005;
+        public static final int FullscreenTheme=0x7f060004;
     }
     public static final class styleable {
         /**  Declare custom theme attributes that allow changing which styles are

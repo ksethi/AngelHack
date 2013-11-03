@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -15,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class BoxManager extends AsyncTask<String, String, String> {
+
 
 	@Override
 	protected String doInBackground(String... uri) {
@@ -44,7 +47,7 @@ public class BoxManager extends AsyncTask<String, String, String> {
 
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        System.out.println(result);
+        Log.d("onPostExecute",result);
     }
 
 }

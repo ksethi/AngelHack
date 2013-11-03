@@ -53,7 +53,7 @@ public class MyActivity extends Activity {
     ExpandableListView expListView;
     String newGroup;
     String defaultDesc = "It was great";
-	
+	boolean createdView = false;
 	@Override
 	 public void onCreate(Bundle savedInstanceState) {
 		  super.onCreate(savedInstanceState);
@@ -116,7 +116,7 @@ public class MyActivity extends Activity {
 		  */
 	      //setContentView(R.layout.activity_drop_box);
 		  dbManager = new DropboxManager(getApplicationContext());
-		  Log.d("onCreate", "Starting up the activity");
+
 		  try {
 		      Intent k = new Intent(MyActivity.this, DropBoxActivity.class);
 		       startActivity(k);
@@ -124,6 +124,13 @@ public class MyActivity extends Activity {
 
 		  }
 	 }
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		 Log.d("onStart", "Starting up the activity");
+	}
 	
 
 		
@@ -134,11 +141,33 @@ public class MyActivity extends Activity {
 	
 	@Override
 	protected void onResume() {
-		super.onResume();	
-		expListView = (ExpandableListView) findViewById(R.id.laptop_list);
-        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(
-                this, groupList, laptopCollection);
-        expListView.setAdapter(expListAdapter);
+		super.onResume();
+		Log.d("onResume", "Starting up the activity");
+		
+		if (!createdView && dbManager.getdbfxFileSystem() != null)
+		{
+			createdView = true;
+			String dbOutput = dbManager.readJsonFile("", "metadata.json");
+			if (dbOutput == "FAIL")
+			{
+				Log.i("NOMETADETA","Metadata doesn't exist.");
+			}
+			else
+			{
+				Metadata.putJsonData(dbOutput);
+				Log.d("Create MetaD","MetaDeta created" );
+				ArrayList<Event> e = Metadata.getEvents();
+				Log.d("mDRan","MetaDeta ran" );
+				
+				for (Event myEvent : e)
+				{
+					newGroup = myEvent.getName();
+			    	defaultDesc = myEvent.getDesc();
+			      	addNewGroup();
+				}
+			}
+		}
+		
 	}
 	
 	@Override
@@ -335,8 +364,15 @@ public class MyActivity extends Activity {
     	
     	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
     	public void onClick(DialogInterface dialog, int whichButton) {
+    		
+    		
     	  newGroup = titleBox.getText().toString();
     	  defaultDesc = descriptionBox.getText().toString();
+    	  
+    	  Metadata.addEvent(newGroup, defaultDesc);
+    	  String jsoned = Metadata.Jsonify();
+    	  Log.d("jsdong","jsoned" + jsoned);
+    	  dbManager.writeJsonFile(jsoned, "", "metadata.json");
       	addNewGroup();
     	  // Do something with value!
     	  }
@@ -352,9 +388,9 @@ public class MyActivity extends Activity {
 
     private void createGroupList() {
         groupList = new ArrayList<String>();
-        groupList.add("Angel Hack");
-        groupList.add("Portland");
-        groupList.add("White Water Rafting");
+ //       groupList.add("Angel Hack");
+ //       groupList.add("Portland");
+ //       groupList.add("White Water Rafting");
     }
     
     private void addNewGroup() {
@@ -367,11 +403,11 @@ public class MyActivity extends Activity {
  
     private void createCollection() {
         // preparing laptops collection(child)
-        String[] hpModels = { "Description: Fake description\nDate:Oct 27th" };
-        String[] hclModels = { "Description: Fake description\nDate:Oct 27th" };
-        String[] sonyModels = { "Description: Fake description\nDate:Oct 27th" };
+        //String[] hpModels = { "Description: Fake description\nDate:Oct 27th" };
+        //String[] hclModels = { "Description: Fake description\nDate:Oct 27th" };
+        //String[] sonyModels = { "Description: Fake description\nDate:Oct 27th" };
         laptopCollection = new LinkedHashMap<String, List<String>>();
- 
+        /*
         for (String laptop : groupList) {
             if (laptop.equals("Angel Hack")) {
                 loadChild(hpModels);
@@ -386,6 +422,7 @@ public class MyActivity extends Activity {
  
             laptopCollection.put(laptop, childList);
         }
+        */
     }
     
     private void loadChild(String[] laptopModels) {

@@ -31,6 +31,7 @@ public class DropBoxActivity extends Activity {
         mTestOutput = (TextView) findViewById(R.id.test_output);
 		if (mDbxAcctMgr.hasLinkedAccount()) {
 			Log.d("DropBoxActivity","Has linked Dropbox :)");
+			DropboxManager.setDbxFileSystem();
 			finish();
 		} else {
 			Log.d("DropBoxActivity","Does not have a linked dropbox ");

@@ -42,30 +42,59 @@ public class DropboxManager {
 	}
 	
 	public static void setDbxFileSystem() {
+		if (dbxFs == null)
+		{
 		try {
 			dbxFs = DbxFileSystem.forAccount(mDbxAcctMgr.getLinkedAccount());
 		} catch (Unauthorized e) {
+			Log.d("dbxFS","UNAUTH");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
 		
+	}
+	
+	private DbxPath getPath(String folderName, String fileName)
+	{
+		String separator = "";
+		 if (folderName.length() != 0)
+		 {
+			 separator = "/";
+		 }
+		 DbxPath path;
+		 path = new DbxPath(DbxPath.ROOT, folderName + separator + fileName);
+		 return path;
 	}
 	 public void writeJsonFile(String fileContents, String folderName, String fileName)
 	 {
-		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName + "/" + fileName);
+		 
 		 try {
-		 	if (!dbxFs.exists(path)) {
+			 DbxPath path = getPath(folderName, fileName);
+			 if (!dbxFs.exists(path))
+			 {
                DbxFile file = dbxFs.create(path);
-
                Log.d("Creating a new file with path",path.toString());
                try {
                    file.writeString(fileContents);
                } finally {
                    file.close();
-               }    
-           }
+              }
+			 }
+               else
+               {
+            	   try
+            	   {
+            	   DbxFile file = dbxFs.open(path);
+            	   file.writeString(fileContents);
+            	   } catch (Exception e)
+            	   {
+            		   Log.d("dbx exists","dbx exists but can't write");
+            	   }
+            	}
+            	   
 		 } catch (IOException e) {
-			 
+			 Log.d("write","writingjsonfailed" + e.toString());
 		 }
 	 } 
 	 
@@ -140,20 +169,25 @@ public class DropboxManager {
 		 String retVal = "";
 		 
 		 Log.d("in dropbox manager", "in the read json file function");
-		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName + "/" + fileName);
+
 	
-		 Log.d("Read path", path.toString());
-				DbxFile file = null;
+		 //Log.d("Read path", path.toString());
+			DbxFile file = null;
 			try {
+				DbxPath path = getPath(folderName, fileName);
+				Log.d("MDPath", "Calc path");
+				Log.d("MDPath", path.toString());
+				if (dbxFs == null)
+				{
+					Log.i("Dbfx", "DBXFS is NULL");
+				}
 				file = dbxFs.open(path);
 		       retVal = file.readString();
 		       Log.i("in the readjson file", retVal);
+		       file.close();
 		   } catch( Exception e) {
-			   Log.i("went into the catch","the readString failed");
-		   }finally {
-			   Log.i("in the readjson file", retVal);
-			   file.close();
-		       
+			   Log.i("went into the catch","the readString failed" + e.toString());
+			   return "FAIL";
 		   }
 	
 		return retVal;

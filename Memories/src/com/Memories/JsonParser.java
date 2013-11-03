@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.Memories.Metadata.Event;
 
 public class JsonParser {
 

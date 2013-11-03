@@ -115,7 +115,12 @@ public class Album extends AsyncTask<String,String,String> {
     private String Jsonify()
     {
     	JsonParser parse = new JsonParser();
-    	return parse.createJsonObject(this.name, this.date, this.description, this.latitude, this.longitude, this.imgNames.toArray());
+    	return parse.createJsonAlbum(this.name, this.date, this.description, this.latitude, this.longitude, this.imgNames.toArray());
+    }
+    
+    public String GetPath()
+    {
+    	return this.name + "/" + "metadata.json";
     }
 
     //TODO READ FROM DISK FOR AN ALBUM

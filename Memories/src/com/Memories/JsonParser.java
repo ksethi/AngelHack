@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 public class JsonParser {
 
-public String createJsonObject (String name, Date date, String desc, float lat, float longi,  Object[] imgs){
+public String createJsonAlbum (String name, Date date, String desc, float lat, float longi,  Object[] imgs){
 		
 		String eventName = name;
 		String eventDate = date.toString();
@@ -34,9 +34,21 @@ public String createJsonObject (String name, Date date, String desc, float lat, 
 		
 		return myObj.toString();
 			
-	}
+}
+
+public String createJsonImageData (String filename, String caption) {
+		JSONObject myObj = new JSONObject();
+		try {
+			myObj.put("name", filename);
+			myObj.put("caption", caption);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return myObj.toString();
+}
 	
-public Map<String, Object> jsonStringToMap (String jsonStr){
+public Map<String, Object> albumStringToMap (String jsonStr){
 	Map <String, Object> hm = new HashMap<String, Object>();
 	
 	String eventName = null;
@@ -76,4 +88,25 @@ public Map<String, Object> jsonStringToMap (String jsonStr){
 	return hm;
 		
 	}
+
+
+	public Map<String, Object> imageDataStringToMap (String imgData) {
+		Map<String, Object> hm = new HashMap<String, Object>();
+		
+		String name = null;
+		String caption = null;
+		
+		try {
+			JSONObject jObject = new JSONObject(imgData);
+			name = jObject.getString("name");
+			caption = jObject.getString("caption");
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+		hm.put("name", name);
+		hm.put("caption", caption);
+		return hm;
+	}
+
 }

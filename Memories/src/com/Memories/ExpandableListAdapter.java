@@ -25,7 +25,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Activity context;
     private Map<String, List<String>> laptopCollections;
     private List<String> laptops;
- 
+    
     public ExpandableListAdapter(Activity context, List<String> laptops,
             Map<String, List<String>> laptopCollections) {
         this.context = context;
@@ -113,6 +113,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView item = (TextView) convertView.findViewById(R.id.laptop);
         item.setTypeface(null, Typeface.BOLD);
         item.setText(laptopName);
+        /*
+        item.setOnClickListener(new OnClickListener() {
+
+			@Override
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Log.d("Works", "Woo");
+				
+			}});
+			*/
         return convertView;
     }
  

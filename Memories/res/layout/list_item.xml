@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textColor="#000000"
+        android:background="#2f2f2f"
+        android:textColor="#ffffff"
         android:paddingLeft="25dp" />
  
     <ImageView

@@ -13,4 +13,10 @@
         <item name="android:paddingRight">300dp</item>
     </style>
     
+    <style name="Header2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/mainheader</item>
+    </style>
+    
 </resources>

@@ -13,5 +13,6 @@
     <string name="writeFile">Write file!</string>
     <string name="your_comment">My Comment</string>
     <string name="send">Send</string>
+    <string name="title_activity_gallery">Gallery</string>
 
 </resources>

@@ -55,6 +55,9 @@
             android:label="@string/title_activity_drop_box" >
         </activity>
         <activity android:name="com.Memories.DisplayImage" >
+        <activity
+            android:name="com.Memories.Gallery"
+            android:label="@string/title_activity_gallery" >
         </activity>
     </application>
 

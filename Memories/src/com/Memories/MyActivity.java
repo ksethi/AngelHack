@@ -76,7 +76,12 @@ public class MyActivity extends Activity {
 	                        groupPosition, childPosition);
 	                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
 	                        .show();
-	 
+	                try {
+	      		      Intent k = new Intent(MyActivity.this, Gallery.class);
+	      		       startActivity(k);
+	      		  } catch(Exception e) {
+
+	      		  }
 	                return true;
 	            }
 	        });

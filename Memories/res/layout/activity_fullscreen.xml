@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    style="@style/layout">
-	<ImageView
+    android:orientation="vertical" >
+
+    <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="logo"
-        android:src="@drawable/logo"
         android:padding="15dp"
-        />
-	<TextView android:id="@+id/Events" android:text="Events"
-	    android:layout_height="72dp"
-	    android:clickable="true"
-	    android:layout_width="match_parent"
-	    style="@style/Header"
-	    android:onClick="HeaderOnClick"/>
-	
-	<ExpandableListView
-        android:id="@+id/laptop_list"
+        android:src="@drawable/logo" />
+
+    <Button
+        android:id="@+id/individual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="IndividualImage"
+        android:text="Individual Image" />
+
+    <TextView
+        android:id="@+id/Events"
+        style="@style/Header"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        style="@style/button_text">
-     </ExpandableListView>
-</LinearLayout> 
+        android:layout_height="72dp"
+        android:clickable="true"
+        android:onClick="HeaderOnClick"
+        android:text="Events" />
+
+    <ExpandableListView
+        android:id="@+id/laptop_list"
+        style="@style/button_text"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+    </ExpandableListView>
+
+</LinearLayout>

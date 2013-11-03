@@ -55,7 +55,7 @@ public class DropboxManager {
 		
 	}
 	
-	private DbxPath getPath(String folderName, String fileName)
+	private static DbxPath getPath(String folderName, String fileName)
 	{
 		String separator = "";
 		 if (folderName.length() != 0)
@@ -66,7 +66,7 @@ public class DropboxManager {
 		 path = new DbxPath(DbxPath.ROOT, folderName + separator + fileName);
 		 return path;
 	}
-	 public void writeJsonFile(String fileContents, String folderName, String fileName)
+	 public static void writeJsonFile(String fileContents, String folderName, String fileName)
 	 {
 		 
 		 try {
@@ -98,7 +98,7 @@ public class DropboxManager {
 		 }
 	 } 
 	 
-	 public ArrayList<Bitmap> getImagesForFolder(String folderName)
+	 public static ArrayList<Bitmap> getImagesForFolder(String folderName)
 	 {
 		 DbxPath path = new DbxPath(DbxPath.ROOT, folderName);
 		 ArrayList<Bitmap> retImages = new ArrayList<Bitmap>();
@@ -117,7 +117,7 @@ public class DropboxManager {
 		 
 	 }
 	 
-	 public Bitmap convertStringToBitmap(String image) {
+	 public static Bitmap convertStringToBitmap(String image) {
 		 try {
 			 byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
 			 Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
@@ -129,13 +129,13 @@ public class DropboxManager {
 		 }
 	 }
 	 
-	 public void writeImageFile(Bitmap bitmap, String folderName, String fileName)
+	 public static void writeImageFile(Bitmap bitmap, String folderName, String fileName)
 	 {
 		 String magic = convertBitmapToString(bitmap);
 		 writeJsonFile(magic, folderName, fileName);
 	 }
 	 
-	 public String convertBitmapToString(Bitmap src) 
+	 public static String convertBitmapToString(Bitmap src) 
 	 { 
 	    ByteArrayOutputStream os=new ByteArrayOutputStream(); 
 	    src.compress(android.graphics.Bitmap.CompressFormat.JPEG, 100, (OutputStream) os); 
@@ -143,7 +143,7 @@ public class DropboxManager {
 	    return Base64.encodeToString(arr,Base64.DEFAULT); 
 	 }
 	 
-	 public Bitmap readImageFile(DbxPath path)
+	 public  static Bitmap readImageFile(DbxPath path)
 	 {
 		 String retVal = "";
 		 try {
@@ -158,13 +158,13 @@ public class DropboxManager {
 			return null;
 		 }
 	 }
-	 public Bitmap readImageFile(String folderName,String fileName)
+	 public static Bitmap readImageFile(String folderName,String fileName)
 	 {
 		 String retVal = readJsonFile(folderName, fileName);
 		 return convertStringToBitmap(retVal);
 	 }
 	 
-	 public String readJsonFile(String folderName, String fileName)
+	 public static String readJsonFile(String folderName, String fileName)
 	 {
 		 String retVal = "";
 		 
@@ -176,14 +176,14 @@ public class DropboxManager {
 			try {
 				DbxPath path = getPath(folderName, fileName);
 				Log.d("MDPath", "Calc path");
-				Log.d("MDPath", path.toString());
+				Log.d("MDPath", "PATH IS" + path.toString());
 				if (dbxFs == null)
 				{
 					Log.i("Dbfx", "DBXFS is NULL");
 				}
 				file = dbxFs.open(path);
 		       retVal = file.readString();
-		       Log.i("in the readjson file", retVal);
+		       Log.i("in the readjson file","in the file" +  retVal);
 		       file.close();
 		   } catch( Exception e) {
 			   Log.i("went into the catch","the readString failed" + e.toString());

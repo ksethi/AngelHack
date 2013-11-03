@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 
 public class JsonParser {
 
@@ -106,15 +108,16 @@ public Map<String, Object> albumStringToMap (String jsonStr){
 		eventName = jObject.getString("name");
 		eventDate = jObject.getString("date");
 		eventDesc = jObject.getString("desc");
-		eventLat = (float)jObject.getDouble("lat");
-		eventLong = (float)jObject.getDouble("long");
+		//eventLat = (float)jObject.getDouble("lat");
+		//eventLong = (float)jObject.getDouble("long");
 		
 		
 		String aJsonString = jObject.getString("imageName");
+		Log.d("jsonprase","jason parser " + aJsonString);
 		imgArray = aJsonString.split(",");
 		imgArray[0] = imgArray[0].replace("[","");
 		imgArray[imgArray.length-1] = imgArray[imgArray.length-1].replace("]","");
-		
+		Log.d("jsonprase","img parser " + imgArray[0]);
 		
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
@@ -127,7 +130,7 @@ public Map<String, Object> albumStringToMap (String jsonStr){
 	hm.put("desc", eventDesc);
 	hm.put("lat", eventLat);
 	hm.put("long", eventLong);
-	hm.put("image", imgArray);
+	hm.put("imageName", imgArray);
 	return hm;
 		
 	}

@@ -75,11 +75,16 @@ public class MyActivity extends Activity {
 	                    int groupPosition, int childPosition, long id) {
 	                final String selected = (String) expListAdapter.getChild(
 	                        groupPosition, childPosition);
+	                String parentName =  (String)expListAdapter.getGroup(groupPosition);
+
 	                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
 	                        .show();
 	                try {
 	      		      Intent k = new Intent(MyActivity.this, Gallery.class);
-	      		       startActivity(k);
+	      		      k.putExtra("SelectedName",selected );
+	      		      k.putExtra("Parent", parentName);
+	      		      //k.putExtra("DBMan", value)
+	      		      startActivity(k);
 	      		  } catch(Exception e) {
 
 	      		  }

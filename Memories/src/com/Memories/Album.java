@@ -2,8 +2,12 @@ package com.Memories;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -14,18 +18,45 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 public class Album extends AsyncTask<String,String,String> {
 
-	private String name;
-	private String description;
-	private Date date;
-	private float latitude;
-	private float longitude;
-	private ArrayList<String> imgNames;
-	private String textLocation;
-	private boolean hasLocation;
+	public String name;
+	public String description;
+	public Date date;
+	public float latitude;
+	public float longitude;
+	public ArrayList<String> imgNames;
+	public String textLocation;
+	public boolean hasLocation;
+	
+	public Album(String Json)
+	{
+		JsonParser parser = new JsonParser();
+		HashMap<String, Object> hash = (HashMap)parser.albumStringToMap(Json);
+		for (Map.Entry entry : hash.entrySet() )
+		{
+			Log.d("val", "hash " + entry.getKey() + entry.getValue());
+		}
+		this.name = (String)hash.get("name");
+		this.description = (String)hash.get("desc");
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		try {this.date = formatter.parse((String)hash.get("date")); } catch (Exception e) { Log.d("Date ", "Date prob " + e.toString()); };
+		this.imgNames = new ArrayList<String>();
+		imgNames.add("funny.bmp");
+		for (String entry : this.imgNames )
+		{
+			Log.d("val", "img " + entry);
+		}
+				//
+		this.hasLocation = false;
+
+		///this.latitude = Float.parseFloat((String)hash.get("lat"));
+		///this.longitude = Float.parseFloat((String)hash.get("long"));
+		//this.SearchForLocation();
+	}
 	
 	public Album(String name,  String desc) {
 		this.name = name;

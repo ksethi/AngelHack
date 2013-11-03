@@ -25,7 +25,6 @@ public class DropBoxActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_drop_box);
-		
 		DbxAccountManager mDbxAcctMgr = DropboxManager.GetManager();
         
         mTestOutput = (TextView) findViewById(R.id.test_output);

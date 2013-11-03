@@ -1,29 +1,65 @@
 package com.Memories;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
+import android.os.DropBoxManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
 
 public class Gallery extends Activity {
 
 	public static final int CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE = 1777;
 	private static final int RESULT_LOAD_IMAGE = 2;
+	Album album;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery);
+		Intent i = getIntent();
 		
-		
-		GridView gridView = (GridView) findViewById(R.id.gridview);
-		 
-        // Instance of ImageAdapter Class
-        gridView.setAdapter(new ImageAdapter(this));
+		try{
+			
+			String description = i.getStringExtra("SelectedName");
+			String name = i.getStringExtra("Parent");
+			
+			Log.d("e","name is" + name);
+			String json = DropboxManager.readJsonFile(name,"album.json");
+			Log.d("e","json string is" + json);
+			album = new Album(json);
+			
+			//Log.d("e","album is" + Float.toString(album.latitude));
+			
+			
+			
+			
+			TextView text = (TextView)findViewById(R.id.topTitle)  ;
+			text.setText(name);
+			GridView gridView = (GridView) findViewById(R.id.gridview);
+	        
+	       
+	        ArrayList<Bitmap> listOfBitMaps = new ArrayList<Bitmap>();
+	        for(String img: album.imgNames) {
+	        	listOfBitMaps.add(DropboxManager.readImageFile(name, img));
+	        	Log.d("Bitmap", "bmp " + img);
+	        }
+	        gridView.setAdapter(new ImageAdapter(this, (Bitmap[])listOfBitMaps.toArray()));
+	        
+	        
+			
+		} catch (Exception e) {
+			Log.d("nblah", "exceptiona" + e.toString());
+		}
+
 	}
 
 	@Override

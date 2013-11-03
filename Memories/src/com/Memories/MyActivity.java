@@ -110,56 +110,9 @@ public class MyActivity extends Activity {
 		  }
 	 }
 	
-	public void loadPictureMenu()
-	{
-		final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-		AlertDialog.Builder builder = new AlertDialog.Builder(MyActivity.this);
-        builder.setTitle("Add New Photo");
-        
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
-                    loadCamera();
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
-                    loadGallery();
-                }
-                else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
-		
-	public void loadCamera() {
-		Log.i("info", "Hello");
-		//Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		//startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
-		
-		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		
-		//_file = new File(_dir, String.format("myPhoto_{0}.jpg", UUID.randomUUID()));
 
-	    //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(_file));
-	    
-		//File file = new File(Environment.getExternalStorageDirectory()+File.separator + "image.jpg");
-		//cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-		startActivityForResult(cameraIntent, CAPTURE_IMAGE_FULLSIZE_ACTIVITY_REQUEST_CODE);
-	}
-	
-	public void loadGallery(){
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-		galleryIntent.setType("image/*");
-		//galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-		startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
 		
-		Log.i("info", "gallery loaded");
-	}
-	
+
 	public void buttonWriteFile(View view) {
 		dbManager.writeJsonFile("This is a test file from KJ", "FirstEvent" , "testFile.json");
 	}

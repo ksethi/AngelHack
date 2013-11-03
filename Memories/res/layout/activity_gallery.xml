@@ -6,11 +6,26 @@
     style="@style/layout">
     <LinearLayout android:orientation="horizontal" android:layout_height="40dp"
         android:layout_width="match_parent" style="@style/topBar">
-        <Button android:layout_width="100dp" android:layout_height="match_parent" android:text="Add Photo" android:layout_gravity="right"/>
+        <Button android:layout_width="100dp" android:onClick="loadPictureMenu" android:layout_height="match_parent" android:text="Add Photo" android:layout_gravity="right"/>
         <Button android:layout_width="100dp" android:layout_height="match_parent" android:text="Generate" android:layout_gravity="center"/>
     </LinearLayout>
     <TextView android:id="@+id/topTitle" android:layout_height="100dp" android:text="Hello World"
         android:gravity="center" android:textColor="#000000" android:layout_width="match_parent" android:textSize="20sp" android:textStyle="bold"
         style="@style/Header2"/>
+    
+      <GridView
+    android:id="@+id/gridview"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:columnWidth="100dp"
+    android:paddingTop="15dp"
+    android:gravity="center"
+    android:horizontalSpacing="1dp"
+    android:numColumns="auto_fit"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="1dp" >
+  </GridView>
+
+
     
 </LinearLayout> 

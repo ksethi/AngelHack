@@ -44,6 +44,7 @@ public class MyActivity extends Activity {
 	private static final int CAMERA_PIC_REQUEST = 1;
 	private static final int RESULT_LOAD_IMAGE = 2;
 	private Button btnSelectPhoto;
+	private Button btnIndividualPhoto;
 	ImageView viewImage;
 	TextView Exif;
 	List<String> groupList;
@@ -80,6 +81,20 @@ public class MyActivity extends Activity {
 	                return true;
 	            }
 	        });
+	     
+	        btnIndividualPhoto = (Button)findViewById(R.id.individual);
+	        btnIndividualPhoto.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+				
+					Intent i = new Intent(getApplicationContext(), DisplayImage.class);
+					//i.putExtra("image name", "value");
+					startActivity(i);
+				}
+			});
+	        
 		  /*
 		  btnSelectPhoto = (Button)findViewById(R.id.btnSelectPhoto);
 		  Exif = (TextView)findViewById(R.id.exif);
